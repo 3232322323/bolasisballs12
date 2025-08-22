@@ -1,53 +1,102 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="referrer" content="no-referrer" />
-    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" id="tab-favicon" href="favicon.png" />
-    <title id="t">Home</title>
-    <link rel="stylesheet" href="/assets/css/global.css?v=6" />
-    <link rel="stylesheet" href="/assets/css/h.css?v=01" />
-    <link rel="stylesheet" href="/assets/css/nav.css?v=01" />
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6840529569014734"
-     crossorigin="anonymous"></script>
-  </head>
-  <body class="center" onload="SplashT">
-    <div class="f-nav"></div>
-    <div id="particles-js">
-      <script rel="preload" src="https://cdn.jsdelivr.net/particles.js/2.0.0/"></script>
-      <div class="main">
-<h1 class="title">&#73;&#110;&#116;&#101;&#114;&#115;&#116;&#101;&#108;&#108;&#97;&#114;</h1>
-        <p id="splash"></p>
-        <div class="search-container">
-          <form id="fv" method="POST">
-            <input
-              id="iv"
-              class="search-home"
-              placeholder="Search or enter a URL"
-              type="text" />
-          </form>
-        </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="referrer" content="no-referrer" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quiz</title>
+  <link rel="shortcut icon" id="tab-favicon" href="favicon.png" />
+  <link rel="icon" href="assets/icons/space/favicon.ico" />
+  <link rel="stylesheet" href="/assets/css/global.css?v=6" />
+  <link rel="stylesheet" href="/assets/css/h.css?v=01" />
+  <link rel="stylesheet" href="/assets/css/nav.css?v=01" />
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet" />
+  <!-- Firebase CDN scripts -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+</head>
+<body class="center">
+  <div class="f-nav"></div>
+  <div id="particles-js">
+    <script rel="preload" src="https://cdn.jsdelivr.net/particles.js/2.0.0/"></script>
+    <div class="main">
+      <h1 class="title">&#73;&#110;&#116;&#101;&#114;&#115;&#116;&#101;&#108;&#108;&#97;&#114;</h1>
+      <p id="splash"></p>
+      <div class="search-container">
+        <form id="fv" method="POST">
+          <input id="iv" class="search-home" placeholder="Search or enter a URL" type="text" />
+        </form>
       </div>
     </div>
-    <script src="assets/js/i.js?v=02"></script>
-    <script src="/assets/js/home.js?v=00"></script>
-    <script src="./assets/ultra/bundle.js?v=10-02-2024"></script>
-    <script src="./assets/ultra/config.js?v=10-02-2024"></script>
-    <script src="assets/js/f.js"></script>
-    <script src="/assets/js/m.js?v=09"></script>
-    <!-- DO NOT REMOVE-->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WKJQ5QHQTJ"></script>
-    <script>
-      window.dataLayer = window.dataLayer || []
-      function gtag() {
-        dataLayer.push(arguments)
-      }
-      gtag("js", new Date())
+  </div>
 
-      gtag("config", "G-WKJQ5QHQTJ")
-    </script>
-    <!-- DO NOT REMOVE-->
-  </body>
+  <!-- Name Prompt Overlay -->
+  <div id="name-overlay" class="name-overlay" style="display:none;">
+    <div class="name-overlay-content">
+      <h2>Enter your name to enter VOID</h2>
+      <input type="text" id="user-name-input" maxlength="32" placeholder="Your name..." />
+      <button id="user-name-confirm">Enter</button>
+    </div>
+  </div>
+
+  <!-- Admin Dot -->
+  <div class="admin-dot" id="admin-dot" title="Admin Panel"></div>
+
+  <!-- Admin Verify Popup -->
+  <div id="admin-verify" class="admin-panel" style="display:none;">
+    <div class="admin-panel-content">
+      <h2>Admin Verification</h2>
+      <input type="text" id="admin-name-input" placeholder="Enter admin name" autocomplete="off" />
+      <button id="admin-verify-btn">Verify</button>
+      <button id="close-admin-verify" class="close-btn">✕</button>
+      <div id="admin-verify-log" style="margin-top:10px;color:#bdf6ff;font-size:14px;"></div>
+    </div>
+  </div>
+
+  <!-- Modern Admin Panel Popup -->
+  <div id="admin-panel" class="admin-panel" style="display:none;">
+    <div class="admin-panel-content">
+      <div class="admin-panel-header">
+        <span>Admin Panel</span>
+        <button id="close-admin-btn" class="close-btn">✕</button>
+      </div>
+      <div id="admin-users-list"></div>
+      <div class="troll-section">
+        <label>Send troll message to user:</label>
+        <div class="troll-row">
+          <input type="text" id="troll-user-input" placeholder="Name" />
+          <input type="text" id="troll-message-input" placeholder="Troll message" />
+          <button id="send-troll-btn" class="block-btn">Send</button>
+        </div>
+      </div>
+      <div id="admin-panel-log" style="margin-top:10px;font-size:14px;text-align:center;"></div>
+      <div id="admin-powers-section" style="margin-top:18px;"></div>
+    </div>
+  </div>
+
+  <!-- Your other scripts -->
+  <script src="js/c.js"></script>
+  <script src="js/f.js"></script>
+  <script src="js/home.js"></script>
+  <script src="js/i.js"></script>
+  <script src="js/m.js"></script>
+  <script src="js/settings.js"></script>
+  <script src="js/t.js"></script>
+  <script src="./assets/mathematics/bundle.js?v=2025-04-15"></script>
+  <script src="./assets/mathematics/config.js?v=2025-04-15"></script>
+  <script src="script.js"></script>
+  <!-- DO NOT REMOVE-->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WKJQ5QHQTJ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || []
+    function gtag() {
+      dataLayer.push(arguments)
+    }
+    gtag("js", new Date())
+    gtag("config", "G-WKJQ5QHQTJ")
+  </script>
+  <!-- DO NOT REMOVE-->
+</body>
 </html>
